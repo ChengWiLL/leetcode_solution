@@ -1,0 +1,48 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string str) {
+        map<char,string> bijection1;
+		map<string,char> bijection2;
+		vector<string> seperate;
+		string word("");
+
+		//以空格为标志分割str字符串
+		for(int i=0;i<str.size();i++)
+		{
+			if(str[i]!=' ')
+				word=word+str[i];
+			else
+			{
+				seperate.push_back(word);
+				word="";
+			}
+			if(i==str.size()-1)
+				seperate.push_back(word);
+		}
+
+		int seperate_num=pattern.size();
+		if(seperate_num!=seperate.size())
+			return false;
+		for(int i = 0; i < seperate_num; i++) 
+		{  
+			map<char, string>::iterator mp1Ite;  
+			map<string,char>::iterator mp2Ite;
+			mp1Ite = bijection1.find(pattern[i]);  
+			mp2Ite=bijection2.find(seperate[i]);
+			if(mp1Ite == bijection1.end()&&mp2Ite==bijection2.end()) 
+			{  
+				bijection1[pattern[i]] = seperate[i];  
+				bijection2[seperate[i]]=pattern[i];
+			}  
+			else 
+				if(mp1Ite != bijection1.end()&&mp2Ite!=bijection2.end())
+				{  
+					if(bijection1[pattern[i]] != seperate[i]||bijection2[seperate[i]]!=pattern[i])  
+						return false;  
+				}  
+				else 
+					return false;  
+		}  
+		return true;
+    }
+};
