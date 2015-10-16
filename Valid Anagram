@@ -1,0 +1,41 @@
+class Solution
+{
+public:
+	bool isAnagram(string s, string t) 
+	{
+		map<char,int> alphabet;
+		map<char,int> alphabet2;
+		map<char,int>::iterator iter1;
+		if(s.size()!=t.size())
+			return false;
+		else
+		{
+			for(int i=0;i<s.size();i++)
+			{
+				iter1=alphabet.find(s[i]);
+				if(iter1==alphabet.end())
+					alphabet[s[i]]=1;
+				else
+					alphabet[s[i]]++;
+			}
+			for(int j=0;j<t.size();j++)
+			{
+				iter1=alphabet2.find(t[j]);
+				if(iter1==alphabet2.end())
+					alphabet2[t[j]]=1;
+				else
+					alphabet2[t[j]]++;
+			}
+			for(iter1=alphabet.begin();iter1!=alphabet.end();iter1++)
+			{
+				if(alphabet2.find(iter1->first)==alphabet2.end())
+					return false;
+				else
+				{
+					if(iter1->second!=alphabet2[iter1->first])
+						return false;
+				}
+			}
+		}
+    }
+};
