@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        map<int,int> container;
+    //    vector<int>::iterator iter;
+        map<int,int>::iterator iter2;
+        for(int i=0;i!=nums.size();++i)
+        {
+            iter2=container.find(nums[i]);
+            if(iter2!=container.end())
+                return true;
+            else
+                container[nums[i]]=1;
+        }
+        return false;
+    }
+};
