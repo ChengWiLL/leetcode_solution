@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int rob(vector<int>& nums)
+	{
+		if(nums.size()==1)
+			return nums[0];
+		if(nums.size()==2)
+			return nums[0]>nums[1]?nums[0]:nums[1];
+		int *booty=new int[nums.size()];
+		booty[0]=nums[0];
+		booty[1]=nums[0]>nums[1]?nums[0]:nums[1];
+		for(int i=2;i<nums.size();i++)
+		{
+			if(booty[i-2]+nums[i]>booty[i-1])
+				booty[i]=booty[i-2]+nums[i];
+			else
+				booty[i]=booty[i-1];
+		}
+		return booty[nums.size()-1];
+	}
+};
