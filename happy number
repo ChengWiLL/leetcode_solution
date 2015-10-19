@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool isHappy(int n) {
+        unordered_map<int, bool> m;
+        int sum = Helper(n);
+        while(sum != 1)
+        {
+            if(m[sum] == true)
+                return false;
+            m[sum] = true;
+            sum = Helper(sum);
+        }
+        return true;
+    }
+    int Helper(int n)
+    {
+        int ret = 0;
+        while(n)
+        {
+            int digit = n%10;
+            n /= 10;
+            ret += (digit*digit);
+        }
+        return ret;
+    }
+};
