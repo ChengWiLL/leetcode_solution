@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        map<int,int> majority;
+        map<int,int>::iterator iter;
+        if(nums.size()==1||nums.size()==2)
+            return nums[0];
+        for(int i=0;i<nums.size();++i)
+        {
+            iter=majority.find(nums[i]);
+            if(iter==majority.end())
+                majority[nums[i]]=1;
+            else
+                majority[nums[i]]++;
+            if(majority[nums[i]]>nums.size()/2)
+                return nums[i];
+        }
+    }
+};
