@@ -1,0 +1,28 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        queue<pair<TreeNode*, TreeNode*>> myQueue;
+        myQueue.push(pair<TreeNode*, TreeNode*>(p, q));
+        while (!myQueue.empty()) {
+            p = myQueue.front().first;
+            q = myQueue.front().second;
+            if(!p ^ !q || (p && q && p->val != q->val))
+                break;
+            myQueue.pop();
+            if(p && q) {
+                myQueue.push(pair<TreeNode*, TreeNode*>(p->left, q->left));
+                myQueue.push(pair<TreeNode*, TreeNode*>(p->right, q->right));
+            }
+        }
+        return myQueue.empty();
+    }
+};
