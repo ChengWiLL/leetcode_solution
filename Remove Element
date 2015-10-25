@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        vector<int>::iterator Iter;
+        for(Iter=nums.begin();Iter!=nums.end();)
+        {
+            if(*Iter==val)
+                Iter=nums.erase(Iter);
+            else
+                Iter++;
+            if(Iter==nums.end())
+                break;
+        }
+        return nums.size();
+    }
+};
