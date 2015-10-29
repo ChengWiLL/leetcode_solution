@@ -1,0 +1,25 @@
+class Solution {
+public:
+	vector<vector<int>> generate(int numRows) {
+		vector<int> order;
+		vector<vector<int> > triangle;
+		while(numRows--)
+		{
+			vector<int> captain;
+			captain.push_back(1);
+			int i=0;
+			int x=order.size();
+			int y=x;
+			while((x--)>=2)
+			{
+				captain.push_back((order[i]+order[i+1]));
+				i++;
+			}
+			if(y!=0)
+				captain.push_back(1);
+			order=captain;
+			triangle.push_back(captain);
+		}
+		return triangle;
+	}
+};
