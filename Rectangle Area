@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        if(H<=B||F>=D||E>=C||G<=A)
+            return (G-E)*(H-F)+(C-A)*(D-B);
+        
+        vector<int> point1,point2;
+        
+        //A,C,E,G
+        point1.push_back(A);point1.push_back(C);point1.push_back(E);point1.push_back(G);
+        sort(point1.begin(),point1.end());
+        
+        //B,D,F,H
+        point2.push_back(B);point2.push_back(D);point2.push_back(F);point2.push_back(H);
+        sort(point2.begin(),point2.end());
+        
+        return (G-E)*(H-F)+(C-A)*(D-B)-(point1[2]-point1[1])*(point2[2]-point2[1]);
+    }
+};
