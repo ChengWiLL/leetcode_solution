@@ -1,0 +1,42 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        if(secret.size()==0||guess.size()==0)
+            return "0A0B";
+        string str("");
+        int tag=0,flag=0;
+        map<char,bool> mymap;
+        map<char,int> mymap1;
+        vector<char> vec;
+        map<char,int>::iterator Iter;
+        for(int i=0;i<secret.size();++i)
+        {
+            mymap[secret[i]]=true;
+            Iter=mymap1.find(secret[i]);
+            if(Iter==mymap1.end())
+                mymap1[secret[i]]=1;
+            else
+                mymap1[secret[i]]++;
+        }
+        for(int j=0;j<guess.size();++j)
+        {
+            if(mymap[guess[j]]==true&&mymap1[guess[j]]!=0)
+            {
+                if(guess[j]==secret[j])
+                    {tag++;mymap1[guess[j]]--;}
+                else
+                    vec.push_back(guess[j]);
+            }
+        }
+        for(int k=0;k<vec.size();++k)
+        {
+            if(mymap1[vec[k]]!=0)
+            {
+                flag++;
+                mymap1[vec[k]]--;
+            }
+        }
+		str+=to_string(tag);str+="A";str+=to_string(flag);str+="B";
+        return str;
+    }
+};
