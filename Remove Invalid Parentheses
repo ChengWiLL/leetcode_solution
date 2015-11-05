@@ -1,0 +1,58 @@
+class Solution {
+public:
+    vector<string> removeInvalidParentheses(string s) {
+
+        // calculate the minimum left and right parantheses to remove
+        int left_para = 0, left_removed = 0, right_removed = 0;
+        for(char ch : s) {
+            if(ch == '(')
+                ++ left_para;
+            if(ch == ')') {
+                if(left_para == 0) {
+                    ++right_removed;
+                } else {
+                    -- left_para;
+                }
+            }
+        }
+        left_removed = left_para;
+
+        // run dfs and use set to remove duplicates
+        unordered_set<string> res;
+        my_dfs(s, 0, left_removed, right_removed, 0, "", res);
+
+        // output
+        vector<string> out(res.begin(), res.end());
+        return out;
+    }
+
+    void my_dfs(string s, int i, int left, int right, int left_para, string str, unordered_set<string>& res) {
+
+        if(i == s.length()) {
+            if(left == 0 && right == 0 && left_para == 0)
+                res.insert(str);
+            return;
+        }
+
+        if(s[i] != '(' && s[i] != ')')
+            my_dfs(s, i+1, left, right, left_para, str + string(1, s[i]), res);
+        else    
+        {
+            if(s[i] == '(') {
+                if(left > 0)
+                    my_dfs(s, i+1, left-1, right, left_para, str, res);
+
+                my_dfs(s, i+1, left, right, left_para+1, str + string(1, s[i]), res);
+            }
+
+            if(s[i] == ')') {
+                if(right > 0)
+                    my_dfs(s, i+1, left, right-1, left_para, str, res);
+
+                if(left_para > 0)
+                    my_dfs(s, i+1, left, right, left_para-1, str + string(1, s[i]), res);
+            }
+        }
+    }
+
+};
