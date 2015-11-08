@@ -1,23 +1,26 @@
 class Solution {
 public:
     vector<int> singleNumber(vector<int>& nums) {
-        map<int,int> mymap;
-        map<int,int>::iterator Iter;
-        vector<int> vec;
-        for(int i=0;i<nums.size();++i)
-        {
-            Iter=mymap.find(nums[i]);
-            if(Iter==mymap.end())
-                mymap[nums[i]]=1;
-            else
-                mymap[nums[i]]++;
-        }
-        Iter=mymap.begin();
-        for(;Iter!=mymap.end();Iter++)
-        {
-            if(Iter->second==1)
-                vec.push_back(Iter->first);
-        }
-        return vec;
+        int len = nums.size(); 
+		int AxorB = 0;
+		for(int i=0; i<len; i++)
+		{
+			AxorB ^= nums[i];
+		} 
+		int mask = AxorB & (~(AxorB-1));
+		int A = 0; int B = 0; 
+		for(int i=0; i<len; i++)
+		{ 
+			if((mask&nums[i])==0)
+			{ 
+				A ^= nums[i];
+			}
+			else
+			{ 
+				B ^= nums[i];
+			}
+		} 
+		vector<int> vec; vec.push_back(A);vec.push_back(B);
+		return vec;
     }
 };
