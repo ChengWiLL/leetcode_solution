@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        map<int,int> mymap;
+        map<int,int>::iterator Iter;
+        vector<int> vec;
+        for(int i=0;i<nums.size();++i)
+        {
+            Iter=mymap.find(nums[i]);
+            if(Iter==mymap.end())
+                mymap[nums[i]]=1;
+            else
+                mymap[nums[i]]++;
+        }
+        Iter=mymap.begin();
+        for(;Iter!=mymap.end();Iter++)
+        {
+            if(Iter->second==1)
+                vec.push_back(Iter->first);
+        }
+        return vec;
+    }
+};
