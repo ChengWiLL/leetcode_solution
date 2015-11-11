@@ -1,0 +1,62 @@
+class Solution {
+public:
+    int findMidProfit(vector<int>& change,int left,int right,int mid)
+    {
+        int leftMidProfit=change[mid],rightMidProfit=change[mid+1];
+        int maxSum=0;
+        int maxleft=mid,maxright=mid+1;
+        for(int i=mid;i>=left;--i)
+        {
+            maxSum+=change[i];
+            if(leftMidProfit<maxSum)
+            {
+                leftMidProfit=maxSum;
+                maxleft=i;
+            }
+        }
+        maxSum=0;
+        for(int j=mid+1;j<=right;++j)
+        {
+            maxSum+=change[j];
+            if(rightMidProfit<maxSum)
+            {
+                rightMidProfit=maxSum;
+                maxright=j;
+            }
+        }
+        return rightMidProfit+leftMidProfit;
+    }
+    int findMaxProfit(vector<int>& array,int low,int high)
+    {
+        int maxLeftProfit,maxRightProfit,maxMidProfit;
+        if(low==high)
+            return array[low];
+        else
+        {
+            maxLeftProfit=findMaxProfit(array,low,(low+high)/2);
+            maxRightProfit=findMaxProfit(array,(low+high)/2+1,high);
+            maxMidProfit=findMidProfit(array,low,high,(low+high)/2);
+            if(maxLeftProfit>=maxRightProfit&&maxLeftProfit>=maxMidProfit)
+                return maxLeftProfit;
+                else
+                {
+                    if(maxRightProfit>=maxLeftProfit&&maxRightProfit>=maxMidProfit)
+                        return maxRightProfit;
+                        else
+                        {
+                            if(maxMidProfit>=maxLeftProfit&&maxMidProfit>=maxRightProfit)
+                                return maxMidProfit;
+                        }
+                }
+        }
+    }
+    int maxProfit(vector<int>& prices) {
+        if(prices.size()==0||prices.size()==1)
+            return 0;
+        vector<int> change;
+        for(int i=1;i<prices.size();++i)
+            change.push_back(prices[i]-prices[i-1]);
+        int Profit=findMaxProfit(change,0,change.size()-1);
+        return Profit>0?Profit:0;
+    }
+};
