@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+        int flag=0;
+        for(int i=1;i<nums.size();++i)
+        {
+            if(nums[i]>0)
+            {
+                if(-nums[i]>0)
+				{
+                    flag=i;
+					continue;
+				}
+            }
+            else
+            {
+                if(-nums[i]<0)
+                    return flag;
+            }
+            if(nums[i-1]<nums[i])
+            {
+                flag=i;
+            }
+            else
+                return flag;
+        }
+        return flag;
+    }
+};
