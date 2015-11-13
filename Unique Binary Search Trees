@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int numTrees(int n) {
+        int treeNum=0;
+        
+        if(n==1||n==0)
+            return 1;
+        if(n==2)
+            return 2;
+        if(n%2==0)
+        {
+            for(int i=1;i<=n/2;++i)
+            {
+                treeNum+=numTrees(i-1)*numTrees(n-i);
+            }
+            treeNum*=2;
+        }
+        else
+        {
+            for(int i=1;i<=n/2;++i)
+            {
+                treeNum+=numTrees(i-1)*numTrees(n-i);
+            }
+            treeNum*=2;
+            int flag=numTrees(n/2);
+            treeNum+=flag*flag;
+        }
+        return treeNum;
+    }
+};
